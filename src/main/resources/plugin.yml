@@ -3,3 +3,4 @@ version: ${project.version} (Build ${git.commit.id.abbrev}, ${git.commit.time})
 description: ${project.description}
 author: jmsgvn
 main: ${project.groupId}.${project.artifactId}
+depend: [ProtocolLib]

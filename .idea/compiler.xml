@@ -9,5 +9,8 @@
         <module name="DeuelLib" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="lib" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
