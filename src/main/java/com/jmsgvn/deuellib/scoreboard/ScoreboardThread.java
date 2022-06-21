@@ -1,15 +1,8 @@
 package com.jmsgvn.deuellib.scoreboard;
 
 import com.jmsgvn.deuellib.DeuelLib;
-import com.jmsgvn.deuellib.tab.PlayerTab;
-import com.jmsgvn.deuellib.tab.TabManager;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class ScoreboardThread extends Thread{
-
-    private Plugin protocolLib = Bukkit.getServer().getPluginManager().getPlugin("ProtocolLib");
 
     public ScoreboardThread() {
         setName("Deuel - Scoreboard Thread");
@@ -17,16 +10,18 @@ public class ScoreboardThread extends Thread{
     }
 
     public void run() {
-        while (DeuelLib.getInstance().isEnabled() && this.protocolLib != null && this.protocolLib.isEnabled()) {
-            for (Player player : DeuelLib.getInstance().getServer().getOnlinePlayers()) {
+        while (DeuelLib.getInstance().isEnabled()) {
+            for (PlayerBoard board : ScoreboardManager.getBoards().values()) {
                 try {
-                    ScoreboardManager.update(player);
+                    if (System.currentTimeMillis() - board.getCreatedAt() >= 250L) {
+                        board.update();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             try {
-                Thread.sleep(250L);
+                Thread.sleep(100L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

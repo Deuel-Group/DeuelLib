@@ -43,17 +43,21 @@ public class PlayerBoard {
 
     private final ThreadLocal<LinkedList<String>> localList = ThreadLocal.withInitial(LinkedList::new);
 
+    private final long createdAt;
+
     public PlayerBoard(Player player) {
         this.uuid = player.getUniqueId();
         Scoreboard scoreboard = DeuelLib.getInstance().getServer().getScoreboardManager().getNewScoreboard();
         this.objective = scoreboard.registerNewObjective("deuellib", "dummy");
         this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard);
+        this.createdAt = System.currentTimeMillis();
     }
 
     public void update() {
-        String title = ScoreboardManager.getScoreboardTitle();
-        List<String> lines = (List<String>) this.localList.get();
+        String title = ChatColor.translateAlternateColorCodes('&', ScoreboardManager.getScoreboardTitle(toPlayer()));
+
+        List<String> lines = this.localList.get();
 
         if (!lines.isEmpty()) {
             lines.clear();
@@ -87,7 +91,8 @@ public class PlayerBoard {
             if (!this.displayedScores.containsKey(score) ||
                 this.displayedScores.get(score) != nextValue)
                 setScore(score, nextValue);
-            if (!this.scorePrefixes.containsKey(score) || !((String)this.scorePrefixes.get(score)).equals(prefix) || !((String)this.scoreSuffixes.get(score)).equals(suffix))
+            if (!this.scorePrefixes.containsKey(score) || !this.scorePrefixes.get(score).equals(prefix) || !this.scoreSuffixes.get(score)
+                .equals(suffix))
                 updateScore(score, prefix, suffix);
             nextValue--;
         }
@@ -206,5 +211,9 @@ public class PlayerBoard {
         this.prefixScoreSuffix[1] = score;
         this.prefixScoreSuffix[2] = suffix;
         return this.prefixScoreSuffix;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
     }
 }

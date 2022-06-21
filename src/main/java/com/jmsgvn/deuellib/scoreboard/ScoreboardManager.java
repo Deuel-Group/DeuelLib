@@ -12,8 +12,6 @@ public class ScoreboardManager {
 
     private static Map<UUID, PlayerBoard> boards = new ConcurrentHashMap<>();
     private static boolean initiated = false;
-
-    private static String scoreboardTitle = "";
     private static ScoreboardProvider provider;
     public static void init() {
         initiated = true;
@@ -46,11 +44,11 @@ public class ScoreboardManager {
         if (board != null) board.update();
     }
 
-    public static String getScoreboardTitle() {
-        return scoreboardTitle;
+    public static String getScoreboardTitle(Player player) {
+        return provider.title(player);
     }
 
-    public static void setScoreboardTitle(String scoreboardTitle) {
-        ScoreboardManager.scoreboardTitle = scoreboardTitle;
+    public static Map<UUID, PlayerBoard> getBoards() {
+        return boards;
     }
 }

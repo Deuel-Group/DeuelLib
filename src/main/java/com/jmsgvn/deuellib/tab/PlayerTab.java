@@ -38,7 +38,7 @@ public final class PlayerTab {
             layout = new TabLayout();
             for (int x = 0; x < 4; x++) {
                 for (int y = 0; y < 20; y++) {
-                    addPlayer(ChatColor.RED + "                   ", getIdentifier(x, y), 0);
+                    addPlayer(ChatColor.RED + "                      ", getIdentifier(x, y), 0);
                     previousNames.put(getIdentifier(x, y), "");
                     previousPings.put(getIdentifier(x, y), 0);
                     previousSkins.put(getIdentifier(x, y), TabListCommons.defaultTexture);
@@ -115,7 +115,7 @@ public final class PlayerTab {
 
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 20; y++) {
-                String name = layout.getString(x, y);
+                String name = ChatColor.translateAlternateColorCodes('&', layout.getString(x, y));
                 int ping = layout.getPing(x, y);
                 SkinTexture texture = layout.getSkinTexture(x, y);
 

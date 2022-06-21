@@ -1,6 +1,5 @@
 package com.jmsgvn.deuellib.scoreboard;
 
-import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -58,8 +57,6 @@ public class ScoreboardTeamPacketMod {
     public ScoreboardTeamPacketMod(String name, String prefix, String suffix, Collection players, int paramInt) {
         this.packet = new PacketPlayOutScoreboardTeam();
 
-
-
         try {
             aField.set(this.packet, name);
             hField.set(this.packet, paramInt);
@@ -90,7 +87,7 @@ public class ScoreboardTeamPacketMod {
     }
 
     public void sendToPlayer(Player bukkitPlayer) {
-        (((CraftPlayer)bukkitPlayer).getHandle()).playerConnection.sendPacket((Packet)this.packet);
+        (((CraftPlayer)bukkitPlayer).getHandle()).playerConnection.sendPacket(this.packet);
     }
 
     private void addAll(Collection col) {
