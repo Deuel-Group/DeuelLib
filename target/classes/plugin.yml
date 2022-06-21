@@ -1,6 +1,10 @@
 name: DeuelLib
-version: 1.0-SNAPSHOT (Build ae48716, 2022-06-20T01:24:09-0500)
+version: 1.1-SNAPSHOT (Build dad563d, 2022-06-20T16:34:30-0500)
 description: ${project.description}
 author: jmsgvn
 main: com.jmsgvn.deuellib.DeuelLib
 depend: [ProtocolLib]
+commands:
+  ping:
+    description: Get the ping of a player
+    usage: /<command>

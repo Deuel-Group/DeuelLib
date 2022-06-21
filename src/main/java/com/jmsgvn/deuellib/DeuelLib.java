@@ -2,6 +2,8 @@ package com.jmsgvn.deuellib;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.jmsgvn.deuellib.common.command.PingCommand;
+import com.jmsgvn.deuellib.scoreboard.ScoreboardManager;
 import com.jmsgvn.deuellib.tab.TabManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,8 +17,10 @@ public class DeuelLib extends JavaPlugin {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
 
         TabManager.init();
+        ScoreboardManager.init();
 
         loadListeners();
+        loadCommands();
     }
 
     @Override
@@ -26,6 +30,10 @@ public class DeuelLib extends JavaPlugin {
 
     private void loadListeners() {
 
+    }
+
+    private void loadCommands() {
+        getCommand("ping").setExecutor(new PingCommand());
     }
 
     public static DeuelLib getInstance() {

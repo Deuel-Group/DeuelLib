@@ -1,5 +1,8 @@
 package com.jmsgvn.deuellib.tab;
 
+import com.jmsgvn.deuellib.tab.common.SkinTexture;
+import com.jmsgvn.deuellib.tab.common.TabListCommons;
+
 /**
  * The TabLayout class that is designed for each player in the TabProvider
  */
@@ -24,6 +27,52 @@ public class TabLayout {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+    /**
+     * Represents the skin of each player tab
+     */
+    private final SkinTexture[][] skinTextures = {
+        {TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture},
+        {TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture},
+        {TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture},
+        {TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture,
+            TabListCommons.defaultTexture, TabListCommons.defaultTexture}
+    };
 
     /**
      * The header the player will see in the tab
@@ -62,6 +111,37 @@ public class TabLayout {
     public void set(int column, int row, String text) {
         set(column, row, text, 0);
     }
+
+    /**
+     * Set the skin of a player in tab
+     *
+     * @param column column of the player
+     * @param row row of the player
+     * @param skinTexture type of skin texture
+     */
+    public void setSkinTextures(int column, int row, SkinTexture skinTexture) {
+        if (!validate(column, row)) {
+            return;
+        }
+
+        skinTextures[column][row] = skinTexture;
+    }
+
+    /**
+     * Get the skin texture of a player in the tab
+     *
+     * @param column column of the skin
+     * @param row row of the skin
+     * @return a skin texture if one exists
+     */
+    public SkinTexture getSkinTexture(int column, int row) {
+        if (!validate(column, row)) {
+            return null;
+        }
+
+        return skinTextures[column][row];
+    }
+
 
 
     /**

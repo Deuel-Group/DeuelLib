@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class TabListener implements Listener {
 
@@ -14,5 +15,10 @@ public class TabListener implements Listener {
         Bukkit.getScheduler().runTaskLater(DeuelLib.getInstance(), ()->{
             TabManager.add(event.getPlayer());
         }, 10L);
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        TabManager.remove(event.getPlayer());
     }
 }

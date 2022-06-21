@@ -4,3 +4,7 @@ description: ${project.description}
 author: jmsgvn
 main: ${project.groupId}.${project.artifactId}
 depend: [ProtocolLib]
+commands:
+  ping:
+    description: Get the ping of a player
+    usage: /<command>

@@ -24,6 +24,9 @@ public class TabManager {
         playerTabs.put(player.getUniqueId(), new PlayerTab(player.getUniqueId()));
     }
 
+    public static void remove(Player player) {
+        playerTabs.remove(player.getUniqueId());
+    }
     public static PlayerTab getTab(Player player) {
         return playerTabs.get(player.getUniqueId());
     }
