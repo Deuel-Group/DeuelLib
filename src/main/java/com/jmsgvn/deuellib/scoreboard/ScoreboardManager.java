@@ -2,6 +2,8 @@ package com.jmsgvn.deuellib.scoreboard;
 
 import com.jmsgvn.deuellib.DeuelLib;
 import com.jmsgvn.deuellib.scoreboard.listener.ScoreboardListener;
+import com.jmsgvn.deuellib.tab.TabManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -50,5 +52,22 @@ public class ScoreboardManager {
 
     public static Map<UUID, PlayerBoard> getBoards() {
         return boards;
+    }
+
+    public static boolean isInitiated() {
+        return initiated;
+    }
+
+    public static void setInitiated(boolean initiated) {
+        ScoreboardManager.initiated = initiated;
+//        Bukkit.getScheduler().runTaskLater(DeuelLib.getInstance(), ()-> {
+//            if (!initiated) {
+//                boards.clear();
+//            } else {
+//                for (Player player : Bukkit.getOnlinePlayers()) {
+//                    ScoreboardManager.create(player);
+//                }
+//            }
+//        }, 20L);
     }
 }

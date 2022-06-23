@@ -1,6 +1,7 @@
 package com.jmsgvn.deuellib.scoreboard;
 
 import com.jmsgvn.deuellib.DeuelLib;
+import org.bukkit.Bukkit;
 
 public class ScoreboardThread extends Thread{
 
@@ -12,12 +13,14 @@ public class ScoreboardThread extends Thread{
     public void run() {
         while (DeuelLib.getInstance().isEnabled()) {
             for (PlayerBoard board : ScoreboardManager.getBoards().values()) {
-                try {
-                    if (System.currentTimeMillis() - board.getCreatedAt() >= 250L) {
-                        board.update();
+                if (ScoreboardManager.isInitiated()) {
+                    try {
+                        if (System.currentTimeMillis() - board.getCreatedAt() >= 250L) {
+                            board.update();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
             try {

@@ -38,7 +38,7 @@ public final class PlayerTab {
             layout = new TabLayout();
             for (int x = 0; x < 4; x++) {
                 for (int y = 0; y < 20; y++) {
-                    addPlayer(ChatColor.RED + "                      ", getIdentifier(x, y), 0);
+                    addPlayer(ChatColor.RED + "                           ", getIdentifier(x, y), 0);
                     previousNames.put(getIdentifier(x, y), "");
                     previousPings.put(getIdentifier(x, y), 0);
                     previousSkins.put(getIdentifier(x, y), TabListCommons.defaultTexture);
@@ -92,6 +92,29 @@ public final class PlayerTab {
     private void updatePing(String name, int ping, GameProfile profile) {
         PlayerInfoPacketMod playerInfoPacketMod = new PlayerInfoPacketMod();
         playerInfoPacketMod.updatePing(this, name, ping, profile);
+    }
+
+    public void destroy () {
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 20; y++) {
+                String name = ChatColor.translateAlternateColorCodes('&', layout.getString(x, y));
+                int ping = layout.getPing(x, y);
+                String identifier = getIdentifier(x, y);
+
+                destroy(name, identifier, ping);
+            }
+        }
+
+        updateHeaderAndFooter("", "");
+    }
+
+    private void destroy(String name, String identifier, int ping) {
+        destroy(name, ping, TabUtils.getOrCreateProfile(identifier));
+    }
+
+    private void destroy(String name, int ping, GameProfile profile) {
+        PlayerInfoPacketMod playerInfoPacketMod = new PlayerInfoPacketMod();
+        playerInfoPacketMod.destroy(this, name, ping, profile);
     }
 
     public Player toPlayer() {

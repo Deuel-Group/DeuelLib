@@ -7,6 +7,5 @@ import java.util.LinkedList;
 public interface ScoreboardProvider {
 
     void provide(LinkedList<String> lines, Player player);
-
     String title(Player player);
 }

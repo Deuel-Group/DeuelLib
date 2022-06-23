@@ -90,6 +90,19 @@ public class PlayerInfoPacketMod {
         sendPacket(player, container);
     }
 
+    public void destroy(PlayerTab playerTab, String name, int ping, GameProfile profile) {
+        Player player = playerTab.toPlayer();
+
+        WrappedGameProfile gameProfile = new WrappedGameProfile(profile.getId(), profile.getName());
+        PlayerInfoData playerInfoData = new PlayerInfoData(gameProfile, ping, EnumWrappers.NativeGameMode.SURVIVAL, WrappedChatComponent.fromText(name));
+
+        PacketContainer container = DeuelLib.getInstance().getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_INFO);
+        container.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+        container.getPlayerInfoDataLists().write(0, Collections.singletonList(playerInfoData));
+
+        sendPacket(player, container);
+    }
+
     private void sendPacket(Player player, PacketContainer packet) {
         try {
             DeuelLib.getInstance().getProtocolManager().sendServerPacket(player, packet);

@@ -8,3 +8,12 @@ commands:
   ping:
     description: Get the ping of a player
     usage: /<command>
+  toggletab:
+    description: Toggle the tab
+    usage: /<command>
+  toggleboard:
+    description: Toggle the scoreboard
+    usage: /<command>
+    aliases:
+      - togglescoreboard
+

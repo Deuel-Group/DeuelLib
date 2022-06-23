@@ -2,11 +2,10 @@ package com.jmsgvn.deuellib.tab;
 
 import com.jmsgvn.deuellib.DeuelLib;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class TabThread extends Thread{
-    private Plugin protocolLib = Bukkit.getServer().getPluginManager().getPlugin("ProtocolLib");
+    private final Plugin protocolLib = Bukkit.getServer().getPluginManager().getPlugin("ProtocolLib");
 
     public TabThread() {
         setName("Deuel - Tab Thread");
@@ -15,11 +14,12 @@ public class TabThread extends Thread{
 
     public void run() {
         while (DeuelLib.getInstance().isEnabled() && this.protocolLib != null && this.protocolLib.isEnabled()) {
-            for (Player player : DeuelLib.getInstance().getServer().getOnlinePlayers()) {
+            for (PlayerTab tab : TabManager.getPlayerTabs().values()) {
                 try {
-                    PlayerTab tab = TabManager.getTab(player);
-                    if (tab != null) {
+                    if (TabManager.isInitiated()) {
                         tab.update();
+                    } else {
+                        tab.destroy();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

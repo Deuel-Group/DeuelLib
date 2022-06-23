@@ -146,6 +146,29 @@ public class PlayerBoard {
         (new ScoreboardTeamPacketMod(score, prefix, suffix, null, 2)).sendToPlayer(toPlayer());
     }
 
+    /**
+     * DO NOT USE YET. DOES NOT COMPLY WITH PAPER FOR SOME REASON
+     */
+    public void destroy() {
+
+        List<String> lines = this.localList.get();
+
+        if (!lines.isEmpty()) {
+            lines.clear();
+        }
+
+        ScoreboardManager.getProvider().provide(this.localList.get(), toPlayer());
+        Iterator<String> iterator = localList.get().iterator();
+
+        while (iterator.hasNext()) {
+            String score = iterator.next();
+            removeScore(score);
+        }
+
+
+        toPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+    }
+
     public Player toPlayer() {
         return Bukkit.getPlayer(uuid);
     }
