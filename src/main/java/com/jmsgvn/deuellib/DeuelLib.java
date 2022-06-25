@@ -3,17 +3,22 @@ package com.jmsgvn.deuellib;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.jmsgvn.deuellib.common.command.PingCommand;
+import com.jmsgvn.deuellib.event.ChatListener;
 import com.jmsgvn.deuellib.scoreboard.ScoreboardManager;
 import com.jmsgvn.deuellib.scoreboard.command.ToggleScoreboardCommand;
 import com.jmsgvn.deuellib.tab.TabManager;
 import com.jmsgvn.deuellib.tab.command.ToggleTabCommand;
+import net.luckperms.api.LuckPerms;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.JedisPool;
 
 public class DeuelLib extends JavaPlugin {
 
     private ProtocolManager protocolManager;
+    private LuckPerms luckPerms;
     private static JedisPool pool;
     @Override public void onEnable() {
         super.onEnable();
@@ -21,8 +26,6 @@ public class DeuelLib extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         pool = new JedisPool("localhost", 6379);
-
-        getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Loading DeuelLib...");
 
         saveDefaultConfig();
 
@@ -38,27 +41,30 @@ public class DeuelLib extends JavaPlugin {
 
     @Override public void onDisable() {
         super.onDisable();
+        pool.close();
     }
 
     private void loadListeners() {
-        getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Loading listeners");
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
     }
 
     private void loadSettings() {
-        getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Loading settings");
         if (getConfig().getBoolean("settings.tab")) {
             TabManager.init();
-            getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "    Tab enabled");
         }
 
         if (getConfig().getBoolean("settings.scoreboard")) {
             ScoreboardManager.init();
-            getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "    Scoreboard enabled");
         }
+
+        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+        if (provider != null) {
+            luckPerms = provider.getProvider();
+        }
+
     }
 
     private void loadCommands() {
-        getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "Loading commands");
         getCommand("ping").setExecutor(new PingCommand());
         getCommand("toggletab").setExecutor(new ToggleTabCommand());
         getCommand("toggleboard").setExecutor(new ToggleScoreboardCommand());
@@ -74,5 +80,9 @@ public class DeuelLib extends JavaPlugin {
 
     public static JedisPool getPool() {
         return pool;
+    }
+
+    public LuckPerms getLuckPerms() {
+        return luckPerms;
     }
 }
